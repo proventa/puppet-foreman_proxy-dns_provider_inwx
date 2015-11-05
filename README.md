@@ -11,7 +11,7 @@ https://github.com/proventa/puppet-foreman_proxy
 
 1. Clone repository into `/usr/share/foreman-proxy/modules/dns/providers`
 2. Set ownership of directory `inwx/` to foreman-proxy: `chown foreman-proxy:foreman-proxy inwx/`
-3. Configure puppet variables **dns_provider**, **dns_user**, **dns_password** and **dns_server** of module foreman_proxy
+3. Configure puppet variables `dns_provider`, `dns_user`, `dns_password` and `dns_server` of module foreman_proxy
   * dns_provider = inwx
   * dns_user = (your inwx-username)
   * dns_password = (your inwx-password)
