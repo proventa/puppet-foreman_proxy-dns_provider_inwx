@@ -1,22 +1,21 @@
 require 'resolv'
 require 'resolv-replace'
-require_relative 'inwx/Domrobot'
 require 'yaml'
+require 'inwx/Domrobot'
 
-module Proxy::Dns
-  class Inwx < Record
+module Proxy::Dns::Inwx
+  class Record < ::Proxy::Dns::Record
     include Proxy::Log
     include Proxy::Util
+
     attr_accessor :domrobot
     attr_accessor :object
 
-    def initialize options = {}
-      user = options[:user]
-      passwd = options[:pass]
+    def initialize(inwx_user,inwx_pass)
       addr = "api.domrobot.com"
       @object = "nameserver"
       @domrobot = INWX::Domrobot.new(addr)
-      result = self.domrobot.login(user,passwd)
+      result = self.domrobot.login(inwx_user,inwx_pass)
       super(options)
     end
 
@@ -25,8 +24,6 @@ module Proxy::Dns
     #          :type => "PTR"}
     def create
       method = "createRecord"
-      #case @type
-      #when "A"
       ip, id = dns_find(@fqdn)
       if ip
         raise(Proxy::Dns::Collision, "#{@fqdn} is already used") unless ip == @value
@@ -37,14 +34,11 @@ module Proxy::Dns
         msg = "add #{@type} DNS entry #{name} => #{@value} to domain #{domain}"
         report msg, result["msg"], false
       end
-      #end
     end
 
     # remove({ :fqdn => "node01.lab", :value => "192.168.100.2"}
     # remove({ :fqdn => "node01.lab", :value => "3.100.168.192.in-addr.arpa"}
     def remove
-      #case @type
-      #when "A"
       ip, id = dns_find(@fqdn)
       raise Proxy::Dns::NotFound.new("Cannot find DNS entry for #{@fqdn}") unless id
       msg = "remove DNS entry #{@fqdn} => #{@value}"
@@ -53,7 +47,6 @@ module Proxy::Dns
       result = self.domrobot.call(self.object, method, params)
 
       report msg, result["msg"], false
-      #end
     end
 
     private

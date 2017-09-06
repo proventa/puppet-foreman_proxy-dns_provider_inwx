@@ -1,0 +1,8 @@
+---
+#
+# Configuration file for 'dns_inwx' DNS provider
+# 
+
+# Enter inwx credentials
+:inwx_user: "user"
+:inwx_pass: "password"
