@@ -11,9 +11,9 @@ Gem::Specification.new do |s|
   s.homepage    = 'https://github.com/proventa/smart_proxy_dns_inwx'
 
   s.summary     = "INWX DNS provider plugin for Foreman's smart proxy"
-  s.description = "INWX DNS provider plugin for Foreman's smart proxy"
+  s.description = "INWX DNS provider plugin for Foreman's smart proxy. See Github for details."
 
   s.files       = Dir['{config,lib,bundler.d}/**/*'] + ['README.md', 'LICENSE']
 
-  s.add_dependency 'inwx-rb'
+  s.add_dependency 'inwx-rb', '~> 0.1'
 end
